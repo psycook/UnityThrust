@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerMissile
+  - Planet
+  - Orb
+  - Enemy
+  - Power Station
+  - Switch
+  - Fuel
+  - Tether
+  - Plinth
   layers:
   - Default
   - TransparentFX
@@ -12,14 +20,14 @@ TagManager:
   - 
   - Water
   - UI
-  - Planet
-  - Actors
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Player Missile
+  - Player Tractor Beam
+  - Orb
+  - Fuel
+  - Switch
+  - Planet Surface
+  - Plinth
   - 
   - 
   - 

@@ -13,13 +13,23 @@ public class CameraFollowScript : MonoBehaviour
     private Vector3 Velocity = Vector3.zero;
 
     void Start()
-    {
-        
+    { 
     }
 
     void Update()
     {
-        Vector3 targetPosition = Target.position + Offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref Velocity, SmoothingTime);
+        if(Target != null) 
+        {
+            Vector3 targetPosition = Target.position + Offset;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref Velocity, SmoothingTime);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            Target = collision.gameObject.transform;
+        }
     }
 }

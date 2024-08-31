@@ -47,7 +47,7 @@ public class PlayerMissilePool : MonoBehaviour
         } 
         else 
         {
-            Debug.LogError("EnemyMissilePool: Parent not set");
+            Debug.LogError("PlayerMissilePool: Parent not set");
         }
         missile.SetActive(false);
         Pool.Add(missile);
