@@ -399,8 +399,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.013375282, g: 1, b: 0, a: 1}
+      key1: {r: 0.12381935, g: 1, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -424,7 +424,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -790,6 +790,7 @@ MonoBehaviour:
   Thruster: {fileID: 6836791430561003153}
   TractorBeam: {fileID: 5733803958092921551}
   MissileSpawn: {fileID: 1831151690574378042}
+  Tether: {fileID: 0}
   ExplosionParticles: {fileID: 4579402951142613287, guid: 5ec12a2a35eaa4130bb74555424567a3, type: 3}
   MissilePool: {fileID: 0}
   FireAudioClip: {fileID: 8300000, guid: 8d5522d39de86614b9d6b69855271915, type: 3}
@@ -943,8 +944,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -0.009362161, y: -0.48859704}
       - {x: -0.48294428, y: -0.5897585}
-      - {x: -1.0558975, y: -2.147818}
-      - {x: 1.0465353, y: -2.147818}
+      - {x: -1.1854398, y: -2.467864}
+      - {x: 1.1913179, y: -2.5135849}
       - {x: 0.48294425, y: -0.61784524}
   m_UseDelaunayMesh: 0
 --- !u!114 &1310566967545570662
@@ -960,6 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tether: {fileID: 4064281208180646102}
+  TetherTime: 0.75
   MovementAction:
     m_Name: Movement
     m_Type: 0

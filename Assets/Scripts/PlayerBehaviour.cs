@@ -1,5 +1,15 @@
+using System.Text.RegularExpressions;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+enum TetherState
+{
+    Untethered,
+    Tethered,
+    Capturing,
+    Captured
+}
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -18,9 +28,11 @@ public class PlayerBehaviour : MonoBehaviour
  
     private Camera MainCamera;
     private bool IsThrusting = false;
-    private bool IsTractorBeamActive = false;
-
+    private TractorBeamState CurrentTractorBeamState = TractorBeamState.Inactive;
     private AudioSource ThrustAudioSource;
+    private GameObject Orb;
+    private TetherState CurrentTetherState = TetherState.Untethered;
+    private float CaptureDistance = 1.6f;
 
     // #######################
     // # Lifecycle Functions # 
@@ -43,11 +55,9 @@ public class PlayerBehaviour : MonoBehaviour
         MissilePool = GameObject.Find("PlayerMissilePool").GetComponent<PlayerMissilePool>();
         ThrustAudioSource = GetComponent<AudioSource>();
         MainCamera = Camera.main;
-        if(Tether != null)
-        {
-            Tether.SetActive(false);
-        }
-        TractorBeamBehaviour.OrbCapturedEvent += OnOrbCaptured;
+        CurrentTractorBeamState = TractorBeamState.Inactive;
+        TractorBeamBehaviour.OrbTetheredEvent += OnOrbThethered;
+        Orb = GameObject.Find("Orb");
     }
 
     void Update()
@@ -58,6 +68,7 @@ public class PlayerBehaviour : MonoBehaviour
         CheckThrusting(movement);
         CheckTractorBeam(movement);
         CheckScreenWrap();
+        CheckCapture();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -125,14 +136,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if(movement.y < 0)
         {
-            IsTractorBeamActive = true;
+            CurrentTractorBeamState = TractorBeamState.Active;
         }
         else
         {
-            IsTractorBeamActive = false;
+            CurrentTractorBeamState = TractorBeamState.Inactive;            
         }
 
-        if(IsTractorBeamActive)
+        if(CurrentTractorBeamState == TractorBeamState.Active)
         {
             TractorBeam.SetActive(true);
             TractorBeam.transform.localScale = new Vector3(1, Random.Range(0.75f, 1.25f), 1);
@@ -142,6 +153,7 @@ public class PlayerBehaviour : MonoBehaviour
             TractorBeam.SetActive(false);
         }
     }   
+
     private void CheckScreenWrap()
     {
         if(MainCamera.transform.position.x < -29.0f)
@@ -157,6 +169,19 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    private void CheckCapture()
+    {
+        if(CurrentTetherState == TetherState.Tethered)
+        {
+            float PlayerOrbDistance = Vector2.Distance(transform.position, Orb.transform.position);
+            if(PlayerOrbDistance >= CaptureDistance)
+            {
+                CurrentTetherState = TetherState.Captured;
+                OrbCaptured();
+            }
+        }
+    }
+
     void PlayerDeath()
     {
         Destroy(gameObject);
@@ -164,12 +189,25 @@ public class PlayerBehaviour : MonoBehaviour
         AudioManager.Instance.PlaySound(Explosion, 1.0f);
     }
 
-    void OnOrbCaptured()
+    void OrbCaptured()
     {
         Debug.Log("PlayerBehaviour::OnOrbCaptured, the orb has been captured!");
-        if(Tether != null)
+        CurrentTetherState = TetherState.Captured;
+        if(Orb != null)
         {
-            Tether.SetActive(true);
+            HingeJoint2D playerJoint = gameObject.GetComponent<HingeJoint2D>();
+            playerJoint.connectedBody = Orb.GetComponent<Rigidbody2D>();
+            playerJoint.enabled = true;
+
+            HingeJoint2D orbJoint = Orb.GetComponent<HingeJoint2D>();
+            orbJoint.connectedBody = gameObject.GetComponent<Rigidbody2D>();
+            orbJoint.enabled = true;
         }
+    }
+
+    void OnOrbThethered()
+    {
+        Debug.Log("PlayerBehaviour::OnOrbTethered, the orb has been tethered!");
+        CurrentTetherState = TetherState.Tethered;
     }
 }
