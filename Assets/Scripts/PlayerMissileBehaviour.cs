@@ -20,14 +20,29 @@ public class PlayerMissileBehaviour : MonoBehaviour
     //On trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Missile hit: " + other.gameObject.name);
-        DisableMissle();
-        Instantiate(ExplosionParticles, transform.position, Quaternion.identity);
-    }
+        Debug.Log("Missile hit: " + other.gameObject.tag);
+        GameObject otherGameObject = other.gameObject;
 
-    void Update()
-    {
-        //transform.Rotate(Vector3.forward * Time.deltaTime * 10); // What is this doing?
+        switch(other.gameObject.tag)
+        {
+            case "Turret":
+                if(otherGameObject != null)
+                {
+                    otherGameObject.GetComponent<Turretbehaviour>().Hit(gameObject);
+                }
+                break;
+            case "Fuel":
+                if(otherGameObject != null)
+                {
+                    otherGameObject.GetComponent<FuelBehaviour>().Hit(gameObject);
+                }                
+                break;
+            default:
+                Instantiate(ExplosionParticles, transform.position, Quaternion.identity);
+                break;
+        }
+
+        DisableMissle();
     }
 
     // ##################

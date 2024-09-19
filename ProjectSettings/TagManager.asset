@@ -10,9 +10,11 @@ TagManager:
   - Enemy
   - Power Station
   - Switch
-  - Fuel
   - Tether
   - Plinth
+  - Fuel
+  - Starfield
+  - Turret
   layers:
   - Default
   - TransparentFX
@@ -28,8 +30,8 @@ TagManager:
   - Switch
   - Planet Surface
   - Plinth
-  - 
-  - 
+  - Starfield
+  - Turret
   - 
   - 
   - 
@@ -50,9 +52,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Actors
-    uniqueID: 238725379
+  - name: Starfield
+    uniqueID: 3728379875
     locked: 0
   - name: Planet
     uniqueID: 43049087
+    locked: 0
+  - name: Actors
+    uniqueID: 238725379
     locked: 0

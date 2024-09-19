@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -56,7 +57,7 @@ public class TractorBeamBehaviour : MonoBehaviour
             if(StartTime >= TetherTime)
             {
                 CurrentTetherState = TetherState.Capturing;
-                SetTetherColor(Color.green);
+                SetTetherColor(Color.white);
                 OrbTetheredEvent?.Invoke();
             }
         }
@@ -64,22 +65,38 @@ public class TractorBeamBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if(CurrentTetherState == TetherState.Untethered)
+        switch(collider.gameObject.tag)
         {
-            CurrentTetherState = TetherState.Tethered;
-            Tether.SetActive(true);
-            SetTetherColor(Color.yellow);
-            StartTime = 0.0f;
+            case "Orb":
+                if(CurrentTetherState == TetherState.Untethered)
+                {
+                    CurrentTetherState = TetherState.Tethered;
+                    Tether.SetActive(true);
+                    SetTetherColor(Color.gray);
+                    StartTime = 0.0f;
+                }
+                break;
+            case "Fuel":
+                Debug.Log("TractorBeamBehaviour:Refuelling started");
+                break;
         }
     }
     
     void OnTriggerExit2D(Collider2D collider)
     {
-        if(CurrentTetherState == TetherState.Tethered)
+        switch(collider.gameObject.tag)
         {
-            CurrentTetherState = TetherState.Untethered;
-            Tether.SetActive(false);
-            StartTime = 0.0f;
+            case "Orb":
+                if(CurrentTetherState == TetherState.Tethered)
+                {
+                    CurrentTetherState = TetherState.Untethered;
+                    Tether.SetActive(false);
+                    StartTime = 0.0f;
+                }
+                break;
+            case "Fuel":
+                Debug.Log("TractorBeamBehaviour:Refuelling stopped");
+                break;
         }
     }
 
