@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FuelBehaviour : MonoBehaviour
+public class SwitchBehaviour : MonoBehaviour
 {
     // #######################
     // # Serialised Fields   # 
     // #######################
+
     [SerializeField] 
-    public ParticleSystem ExplosionParticles;
+    GameObject Door;
+
 
     // #######################
     // # Lifecycle Functions # 
     // #######################
-    
+
     // ####################
     // # Custom Functions # 
     // ####################
@@ -22,8 +24,10 @@ public class FuelBehaviour : MonoBehaviour
     {
         if(hitBy.tag == "PlayerMissile")
         {
-            Destroy(gameObject);
-            Instantiate(ExplosionParticles, transform.position, Quaternion.identity);
+            if(Door != null)
+            {
+                Door.GetComponent<DoorBehaviour>().Toggle();
+            }
         }
-    } 
+    }
 }

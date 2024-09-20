@@ -15,6 +15,7 @@ TagManager:
   - Fuel
   - Starfield
   - Turret
+  - EnemyMissile
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - Plinth
   - Starfield
   - Turret
-  - 
+  - EnemyMissile
   - 
   - 
   - 

@@ -191,7 +191,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OrbCaptured()
     {
-        Debug.Log("PlayerBehaviour::OnOrbCaptured, the orb has been captured!");
         CurrentTetherState = TetherState.Captured;
         if(Orb != null)
         {
@@ -207,7 +206,16 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnOrbThethered()
     {
-        Debug.Log("PlayerBehaviour::OnOrbTethered, the orb has been tethered!");
         CurrentTetherState = TetherState.Tethered;
+    }
+
+
+    public void Hit(GameObject hitBy)
+    {
+        Debug.Log("Player hit by: " + hitBy.tag);
+        if(hitBy.tag == "EnemyMissile")
+        {
+            PlayerDeath();
+        }
     }
 }

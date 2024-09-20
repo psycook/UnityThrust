@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerMissilePool : MonoBehaviour
+public class EnemyMisslePool : MonoBehaviour
 {
-    [SerializeField] private GameObject Prefab;
-    [SerializeField] private int PoolSize = 10;
-    [SerializeField] private bool CanGrow = true;
-    private List<GameObject> Pool = new List<GameObject>();
+    [SerializeField] 
+    private GameObject Prefab;
+    [SerializeField] 
+    private int PoolSize = 10;
+    [SerializeField] 
+    private bool CanGrow = true;
+    private List<GameObject> 
+    Pool = new List<GameObject>();
     private Transform Parent;
 
     void Awake()
@@ -39,8 +43,8 @@ public class PlayerMissilePool : MonoBehaviour
     public GameObject CreateMissile(Vector3 position, Quaternion rotation)
     {
         GameObject missile = Instantiate(Prefab, Vector3.zero, Quaternion.identity);
-        missile.name = "PlayerMissile";
-        missile.tag = "PlayerMissile";
+        missile.name = "EnemyMissile";
+        missile.tag = "EnemyMissile";
         if(Parent)
         {
             missile.transform.parent = Parent;
