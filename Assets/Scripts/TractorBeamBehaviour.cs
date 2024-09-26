@@ -58,6 +58,14 @@ public class TractorBeamBehaviour : MonoBehaviour
             {
                 CurrentTetherState = TetherState.Capturing;
                 SetTetherColor(Color.white);
+
+                //find the plinth gameobject and disable it
+                GameObject plinth = GameObject.Find("Plinth");
+                if(plinth != null)
+                {
+                    plinth.SetActive(false);
+                }
+                
                 OrbTetheredEvent?.Invoke();
             }
         }

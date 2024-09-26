@@ -14,6 +14,7 @@ enum TetherState
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject Thruster;
+    [SerializeField] private GameObject Shield;
     [SerializeField] private GameObject TractorBeam;
     [SerializeField] private GameObject MissileSpawn;
     [SerializeField] private GameObject Tether;
@@ -86,8 +87,15 @@ public class PlayerBehaviour : MonoBehaviour
     // #######################
 
     private void UpdateMovement(Vector2 movement)
-    {
+    {        
+        // euler rotoation of transform based on movement
         transform.Rotate(0, 0, -movement.x * Time.deltaTime * MovementSpeed);
+
+        // update the position of the tractor beam
+        if(CurrentTractorBeamState == TractorBeamState.Active)
+        {
+            TractorBeam.transform.position = new Vector3(transform.position.x, transform.position.y - 0.25f, TractorBeam.transform.position.z);
+        }
     }
 
     private void CheckFiring()
@@ -120,7 +128,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Thruster.SetActive(true);
             GetComponent<Rigidbody2D>().AddForce(transform.up * movement.y * Time.deltaTime * ThrustAmount);
-            Thruster.transform.localScale = new Vector3(1, Random.Range(0.5f, 1.0f), 1);
+            Thruster.transform.localScale = new Vector3(Thruster.transform.localScale.x, Random.Range(0.4f, 0.6f), Thruster.transform.localScale.z);
             if(!ThrustAudioSource.isPlaying)
             {
                 ThrustAudioSource.PlayOneShot(ThrustAudioSource.clip);
@@ -145,12 +153,16 @@ public class PlayerBehaviour : MonoBehaviour
 
         if(CurrentTractorBeamState == TractorBeamState.Active)
         {
+            Shield.SetActive(true);
+            float ShieldScale = Random.Range(0.75f, 0.85f);
+            Shield.transform.localScale = new Vector3(ShieldScale, ShieldScale, 1);
             TractorBeam.SetActive(true);
-            TractorBeam.transform.localScale = new Vector3(1, Random.Range(0.75f, 1.25f), 1);
+            TractorBeam.transform.localScale = new Vector3(TractorBeam.transform.localScale.x, Random.Range(0.45f, 0.55f), TractorBeam.transform.localScale.z);
         }
         else
         {
             TractorBeam.SetActive(false);
+            Shield.SetActive(false);
         }
     }   
 
