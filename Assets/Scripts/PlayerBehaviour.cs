@@ -90,12 +90,7 @@ public class PlayerBehaviour : MonoBehaviour
     {        
         // euler rotoation of transform based on movement
         transform.Rotate(0, 0, -movement.x * Time.deltaTime * MovementSpeed);
-
-        // update the position of the tractor beam
-        if(CurrentTractorBeamState == TractorBeamState.Active)
-        {
-            TractorBeam.transform.position = new Vector3(transform.position.x, transform.position.y - 0.25f, TractorBeam.transform.position.z);
-        }
+        TractorBeam.transform.position = new Vector3(transform.position.x, transform.position.y - 0.25f, TractorBeam.transform.position.z);
     }
 
     private void CheckFiring()
@@ -154,15 +149,16 @@ public class PlayerBehaviour : MonoBehaviour
         if(CurrentTractorBeamState == TractorBeamState.Active)
         {
             Shield.SetActive(true);
+            TractorBeam.SetActive(true);
             float ShieldScale = Random.Range(0.75f, 0.85f);
             Shield.transform.localScale = new Vector3(ShieldScale, ShieldScale, 1);
-            TractorBeam.SetActive(true);
             TractorBeam.transform.localScale = new Vector3(TractorBeam.transform.localScale.x, Random.Range(0.45f, 0.55f), TractorBeam.transform.localScale.z);
+
         }
         else
         {
-            TractorBeam.SetActive(false);
             Shield.SetActive(false);
+            TractorBeam.SetActive(false);
         }
     }   
 

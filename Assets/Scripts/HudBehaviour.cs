@@ -1,26 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class HudBehaviour : MonoBehaviour
 {
+
     // #######################
     // # Serialised Fields   # 
     // #######################
 
-    [SerializeField] private TextMeshPro FuelText;
-    [SerializeField] private TextMeshPro ScoreText;
-    [SerializeField] private TextMeshPro LivesText;
-
     // #######################
     // # GameObject Fields   # 
     // #######################
-
-    private int Fuel  = 1000;
-    private int Score = 0;
-    private int Lives = 0;
 
     // #######################
     // # Lifecycle Functions # 
@@ -31,11 +22,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);   
     }
 
+    // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    // Update is called once per frame
     void Update()
     {
         

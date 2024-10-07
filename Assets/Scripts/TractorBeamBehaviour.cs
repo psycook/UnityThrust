@@ -13,6 +13,7 @@ public class TractorBeamBehaviour : MonoBehaviour
     [SerializeField] private GameObject Tether;
     [SerializeField] private float TetherTime = 0.5f;
     [SerializeField] private InputAction MovementAction;
+    [SerializeField] private GameObject[] beams;
 
     private GameObject Orb;
     private TetherState CurrentTetherState = TetherState.Untethered;
@@ -46,6 +47,7 @@ public class TractorBeamBehaviour : MonoBehaviour
         {
             Tether.SetActive(false);
         }   
+        HideBeams();
     }
 
     // Update is called once per frame
@@ -86,6 +88,7 @@ public class TractorBeamBehaviour : MonoBehaviour
                 break;
             case "Fuel":
                 Debug.Log("TractorBeamBehaviour:Refuelling started");
+                ShowBeams();
                 break;
         }
     }
@@ -104,6 +107,7 @@ public class TractorBeamBehaviour : MonoBehaviour
                 break;
             case "Fuel":
                 Debug.Log("TractorBeamBehaviour:Refuelling stopped");
+                HideBeams();
                 break;
         }
     }
@@ -116,5 +120,21 @@ public class TractorBeamBehaviour : MonoBehaviour
     {
         Tether.GetComponent<LineRenderer>().startColor = color;
         Tether.GetComponent<LineRenderer>().endColor = color;
+    }
+
+    private void ShowBeams()
+    {
+        foreach(GameObject beam in beams)
+        {
+            beam.SetActive(true);
+        }
+    }   
+
+    private void HideBeams()
+    {
+        foreach(GameObject beam in beams)
+        {
+            beam.SetActive(false);
+        }
     }
 }
